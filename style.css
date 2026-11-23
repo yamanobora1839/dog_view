@@ -1,0 +1,123 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.viewer {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  background: #000;
+}
+
+.eye {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+.camera-feed {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+}
+
+.divider {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: rgb(255 255 255 / 20%);
+  pointer-events: none;
+}
+
+.start-panel {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: rgb(0 0 0 / 78%);
+}
+
+.start-panel[hidden] {
+  display: none;
+}
+
+.start-panel h1 {
+  margin: 0;
+  font-size: clamp(1.25rem, 4vw, 2rem);
+}
+
+.start-panel p {
+  max-width: 34rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+#start-button {
+  min-width: 12rem;
+  min-height: 3rem;
+  padding: 0.75rem 1.25rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: #fff;
+  color: #111;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+#start-button:disabled {
+  opacity: 0.65;
+}
+
+.notice {
+  color: #ddd;
+  font-size: 0.875rem;
+}
+
+.orientation-hint {
+  display: none;
+}
+
+@media (orientation: portrait) {
+  .orientation-hint {
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    padding: 1rem;
+    background: rgb(0 0 0 / 82%);
+    text-align: center;
+    font-size: 1.125rem;
+    pointer-events: none;
+  }
+}
