@@ -4,27 +4,29 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#000000">
+  <meta name="description" content="スマートフォンのカメラで、人間と犬の見え方を体験するアプリです。">
   <title>犬と人間の見え方体験</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="viewer" aria-label="カメラ映像 VR ビューアー">
-    <section class="eye eye--left" aria-label="左目用の映像">
-      <video class="camera-feed" autoplay muted playsinline></video>
-    </section>
-    <section class="eye eye--right" aria-label="右目用の映像">
-      <video class="camera-feed" autoplay muted playsinline></video>
-    </section>
-    <div class="divider" aria-hidden="true"></div>
+  <main class="viewer" aria-label="カメラ体験">
+    <video id="camera-feed" autoplay muted playsinline aria-label="背面カメラの映像"></video>
 
-    <div class="start-panel" id="start-panel">
-      <h1>犬と人間の見え方体験</h1>
-      <p>スマートフォンを横向きにして、カメラを開始してください。</p>
-      <button id="start-button" type="button">カメラを開始</button>
-      <p class="notice" id="notice" role="status" aria-live="polite">カメラ映像はこの端末内だけで処理され、送信されません。</p>
-    </div>
+    <section class="start-panel" id="start-panel" aria-labelledby="page-title">
+      <h1 id="page-title">犬と人間の見え方体験</h1>
+      <p>カメラに映る景色を、肉眼で見た景色と見比べてみましょう。</p>
+      <button class="button button--start" id="start-button" type="button">カメラを開始</button>
+      <p class="notice" id="notice" role="status" aria-live="polite">カメラ映像はこの端末内だけで処理され、外部には送信されません。</p>
+    </section>
 
-    <p class="orientation-hint" aria-live="polite">スマートフォンを横向きにしてください</p>
+    <section class="controls" id="controls" aria-label="見え方の切り替え" hidden>
+      <div class="mode-buttons" role="group" aria-label="見え方を選択">
+        <button class="button mode-button is-active" id="human-mode" type="button" aria-pressed="true">人間の見え方</button>
+        <button class="button mode-button" id="dog-mode" type="button" aria-pressed="false">犬の見え方</button>
+      </div>
+      <p class="mode-status" id="mode-status" role="status" aria-live="polite">人間の見え方を表示しています</p>
+      <button class="button button--stop" id="stop-button" type="button">カメラを停止</button>
+    </section>
   </main>
   <script src="app.js"></script>
 </body>

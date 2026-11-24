@@ -13,41 +13,26 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+button {
+  font: inherit;
+}
+
 .viewer {
   position: fixed;
   inset: 0;
-  display: flex;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   height: 100dvh;
-  background: #000;
-}
-
-.eye {
-  position: relative;
-  width: 50%;
-  height: 100%;
   overflow: hidden;
   background: #000;
 }
 
-.camera-feed {
+#camera-feed {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   background: #000;
-}
-
-.divider {
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 1px;
-  background: rgb(255 255 255 / 20%);
-  pointer-events: none;
 }
 
 .start-panel {
@@ -59,18 +44,19 @@ body {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  padding: 1.5rem;
+  padding: max(1.5rem, env(safe-area-inset-top)) max(1.5rem, env(safe-area-inset-right)) max(1.5rem, env(safe-area-inset-bottom)) max(1.5rem, env(safe-area-inset-left));
   text-align: center;
-  background: rgb(0 0 0 / 78%);
+  background: #171717;
 }
 
-.start-panel[hidden] {
+.start-panel[hidden],
+.controls[hidden] {
   display: none;
 }
 
 .start-panel h1 {
   margin: 0;
-  font-size: clamp(1.25rem, 4vw, 2rem);
+  font-size: clamp(1.5rem, 6vw, 2.25rem);
 }
 
 .start-panel p {
@@ -79,45 +65,125 @@ body {
   line-height: 1.6;
 }
 
-#start-button {
-  min-width: 12rem;
-  min-height: 3rem;
-  padding: 0.75rem 1.25rem;
-  border: 0;
-  border-radius: 0.5rem;
-  background: #fff;
-  color: #111;
-  font: inherit;
-  font-weight: 700;
+.button {
+  min-height: 3.75rem;
+  padding: 0.8rem 1.25rem;
+  border: 3px solid transparent;
+  border-radius: 1rem;
+  font-size: clamp(1rem, 4vw, 1.25rem);
+  font-weight: 750;
   cursor: pointer;
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-#start-button:disabled {
-  opacity: 0.65;
+.button:focus-visible {
+  outline: 4px solid #ffdf57;
+  outline-offset: 3px;
+}
+
+.button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.button--start {
+  min-width: min(18rem, 85vw);
+  min-height: 4.25rem;
+  background: #ffdf57;
+  color: #171717;
 }
 
 .notice {
-  color: #ddd;
-  font-size: 0.875rem;
+  color: #e5e5e5;
+  font-size: 0.95rem;
 }
 
-.orientation-hint {
-  display: none;
+.controls {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+  pointer-events: none;
+  background: linear-gradient(180deg, rgb(0 0 0 / 48%), transparent 30%, transparent 65%, rgb(0 0 0 / 45%));
 }
 
-@media (orientation: portrait) {
-  .orientation-hint {
+.mode-buttons {
+  display: flex;
+  width: min(100%, 34rem);
+  gap: 0.75rem;
+  pointer-events: auto;
+}
+
+.mode-button {
+  flex: 1;
+  min-height: 3.75rem;
+  border-color: #fff;
+  background: rgb(20 20 20 / 88%);
+  color: #fff;
+}
+
+.mode-button.is-active {
+  border-color: #ffdf57;
+  background: #ffdf57;
+  color: #171717;
+}
+
+.mode-status {
+  max-width: 90%;
+  margin: auto 0 0;
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.75rem;
+  background: rgb(0 0 0 / 68%);
+  text-align: center;
+  line-height: 1.4;
+  pointer-events: none;
+}
+
+.button--stop {
+  min-height: 3rem;
+  padding: 0.55rem 1rem;
+  border-color: #fff;
+  background: rgb(20 20 20 / 88%);
+  color: #fff;
+  font-size: 1rem;
+  pointer-events: auto;
+}
+
+@media (max-height: 420px) and (orientation: landscape) {
+  .controls {
+    flex-direction: row;
+    align-items: flex-start;
+    padding-top: max(0.5rem, env(safe-area-inset-top));
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+
+  .mode-buttons {
+    width: auto;
+    max-width: 70%;
+    gap: 0.5rem;
+  }
+
+  .mode-button {
+    min-height: 3rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .mode-status {
     position: absolute;
-    z-index: 3;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    margin: 0;
-    padding: 1rem;
-    background: rgb(0 0 0 / 82%);
-    text-align: center;
-    font-size: 1.125rem;
-    pointer-events: none;
+    right: 1rem;
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    left: 1rem;
+    width: fit-content;
+    margin: auto;
+  }
+
+  .button--stop {
+    min-height: 2.75rem;
   }
 }
