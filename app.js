@@ -11,6 +11,7 @@ const modeStatus = document.querySelector("#mode-status");
 const dogContext = dogView.getContext("2d", { willReadFrequently: true, alpha: false });
 
 const MAX_PROCESSING_SIZE = 720;
+const DOG_BLUR_PX = 1.2;
 let cameraStream = null;
 let currentMode = "human";
 let animationFrameId = null;
@@ -68,6 +69,8 @@ function setMode(mode) {
 
   cameraFeed.hidden = !isHumanMode;
   dogView.hidden = isHumanMode;
+  // CSS filter applies a light blur after the color-transformed canvas is composed.
+  dogView.style.filter = isHumanMode ? "none" : `blur(${DOG_BLUR_PX}px)`;
 
   if (isHumanMode) {
     modeStatus.textContent = "人間の見え方を表示しています";
@@ -142,6 +145,7 @@ function stopCamera() {
   }
 
   cameraFeed.srcObject = null;
+  dogView.style.filter = "none";
   dogContext.clearRect(0, 0, dogView.width, dogView.height);
   dogView.width = 0;
   dogView.height = 0;
